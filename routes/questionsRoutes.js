@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const fs = require("fs");
-const Questions = require('./Questions');
+const Questions = require('../questions/Questions');
 
 
 /*
- * GET //getQuestions/:userId/ Given a user id, find a JSON file named after the user id, parsed into a JSON object, and return it.
+ * GET /questions/get/:userId/ Given a user id, find a JSON file named after the user id, parsed into a JSON object, and return it.
  */
-router.get('/getQuestions/:userId', function(req, res, next) {
+router.get('/get/:userId', function(req, res, next) {
   const userId = req.params.userId;
   let questions;
   try {
