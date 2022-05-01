@@ -16,6 +16,7 @@ router.get('/get/:userId', function(req, res, next) {
     console.log(workingDir);
     questions = JSON.parse(fs.readFileSync(`${process.cwd()}/data/questions/${userId}.json`, 'utf8'));
     res.status(200).json(questions);
+    console.log(`Pre-existing questions for user ${userId} requested.`);
   } catch (err) {
     console.error(`Error reading questions for user ${userId}: ${err}`);
     res.status(500).json({ error: `Error reading questions for user ${userId}: ${err}` });
@@ -33,6 +34,7 @@ router.get('/generate/:userId', function(req, res, next) {
     fs.writeFileSync(`${process.cwd()}/data/questions/${userId}.json`, JSON.stringify(questions));
     res.status(200).json(questions);
     res.send();
+    console.log(`Questions for user ${userId} generated.`);
   } catch (err) {
     res.status(500).json({ error: `Error writing questions for user ${userId}: ${err}` });
     console.error(`Error writing questions for user ${userId}: ${err}`);

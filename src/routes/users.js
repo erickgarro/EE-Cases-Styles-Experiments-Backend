@@ -6,9 +6,9 @@ const router = express.Router();
  * GET create a user id
  */
 router.get('/getId', function(req, res) {
-    res.status(200).json({
-        userId: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-    });
+  const userId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  res.status(200).json({userId});
+  console.log(`User ID ${userId} created`);
 });
 
 /*
@@ -21,6 +21,7 @@ router.get('/hasFinished/:userId', (req, res) => {
     res.status(200).json({
       hasFinished: userResponses.hasFinished
     });
+    console.log(`Yes, user ${userId} has finished the experiment.`);
   } catch (err) {
     res.status(200).json({
       hasFinished: false
