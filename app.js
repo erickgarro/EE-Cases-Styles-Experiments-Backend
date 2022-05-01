@@ -3,7 +3,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const app = express();
-const PORT = process.env.PORT || 8080;
+
 
 const indexRouter = require('./src/routes');
 const questionsRouter = require('./src/routes/questions');
@@ -21,9 +21,5 @@ app.use('/', indexRouter);
 app.use('/questions', questionsRouter);
 app.use('/responses', responsesRouter);
 app.use('/users', usersRouter);
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
 
 module.exports = app;
