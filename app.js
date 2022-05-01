@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
-const questionsRouter = require('./routes/questionsRoutes');
+const questionsRouter = require('./routes/questions');
 const responsesRouter = require('./routes/responses');
 const usersRouter = require('./routes/users');
 
