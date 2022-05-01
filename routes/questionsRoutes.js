@@ -1,7 +1,8 @@
 const express = require('express');
-const fs = require("fs");
 const router = express.Router();
-const Questions = require('../experiments/questions.js');
+const fs = require("fs");
+const Questions = require('./Questions');
+
 
 /*
  * GET //getQuestions/:userId/ Given a user id, find a JSON file named after the user id, parsed into a JSON object, and return it.

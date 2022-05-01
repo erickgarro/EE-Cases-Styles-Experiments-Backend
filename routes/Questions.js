@@ -409,4 +409,4 @@ function createQuestions(_userId) {
   };
 }
 
-module.exports = { createQuestions };
+module.exports = { createQuestions: createQuestions };
