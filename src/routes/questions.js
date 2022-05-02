@@ -23,7 +23,7 @@ router.get('/get/:userId', function(req, res, next) {
     fs.writeFileSync(`${process.cwd()}/data/questions/${userId}.json`, JSON.stringify(questions));
     res.status(200).json(questions);
   }
-  res.send();
+  res.send()
 });
 
 module.exports = router;
