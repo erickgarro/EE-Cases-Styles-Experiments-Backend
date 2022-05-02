@@ -5,7 +5,7 @@ const Questions = require('../questions/Questions');
 
 
 /*
- * GET /questions/get/:userId/ Given a user id, find a JSON file named after the user id, parsed into a JSON object, and return it.
+ * GET /questions/get/:userId/ Given a user id, find a pre-existing questions file and return it, else create a new one and return it.
  */
 router.get('/get/:userId', function(req, res, next) {
   const userId = req.params.userId;
@@ -19,26 +19,11 @@ router.get('/get/:userId', function(req, res, next) {
     console.log(`Pre-existing questions for user ${userId} requested.`);
   } catch (err) {
     console.error(`Error reading questions for user ${userId}: ${err}`);
-    res.status(500).json({ error: `Error reading questions for user ${userId}: ${err}` });
-  }
-});
-
-/*
- * GET /questions/:userId Given a user id and a question id, read a JSON file on disk with the answers for the user, and return it as a JSON object.
- */
-router.get('/generate/:userId', function(req, res, next) {
-  const userId = req.params.userId;
-  const questions = Questions.createQuestions(userId);
-
-  try {
+    questions = Questions.createQuestions(userId);
     fs.writeFileSync(`${process.cwd()}/data/questions/${userId}.json`, JSON.stringify(questions));
     res.status(200).json(questions);
-    res.send();
-    console.log(`Questions for user ${userId} generated.`);
-  } catch (err) {
-    res.status(500).json({ error: `Error writing questions for user ${userId}: ${err}` });
-    console.error(`Error writing questions for user ${userId}: ${err}`);
   }
+  res.send();
 });
 
 module.exports = router;

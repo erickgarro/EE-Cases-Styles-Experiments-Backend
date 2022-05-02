@@ -43,8 +43,9 @@ router.post('/', function(req, res, next) {
  * The email is sent to the administrators in the body of the request.
  * It responds with a 200 status code or an error message.
  */
-router.put('/', function(req, res, next) {
-  const userId = req.body.userId;
+
+router.put('/submit/:userId', function(req, res, next) {
+  const userId = req.params.userId;
   const responses = req.body;
   try {
     fs.writeFileSync(`${process.cwd()}/data/responses/${userId}.json`, JSON.stringify(responses));
