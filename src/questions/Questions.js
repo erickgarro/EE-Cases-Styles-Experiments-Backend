@@ -409,4 +409,64 @@ function createQuestions(_userId) {
   };
 }
 
-module.exports = { createQuestions: createQuestions };
+/*
+ * This method is responsible for the creation of the questions for the tutorial
+ * It returns an array of questions.
+ *
+ * @param {string} _userId - User id
+ * @returns {Questions[]} - Array of questions.
+ */
+function createTutorialQuestions(_userId) {
+  let userId = _userId;
+  let questions = [];
+  let options = [];
+  let words = [];
+  let caseStyle = undefined;
+  let color = undefined;
+
+  // Question 1
+  words = ["good", "mood"];
+  caseStyle = "kebab";
+  color = "monochromatic";
+  options = [
+    new Option(1 + '.' + 1, ["good", "mood"], true),
+    new Option(1 + '.' + 2, ["goon", "moon"], false),
+    new Option(1 + '.' + 3, ["goal", "mood"], false),
+    new Option(1 + '.' + 4, ["good", "mono"], false),
+  ];
+  options = shuffleArray(options);
+  questions.push(new Questions('1', words, caseStyle, color, options));
+
+  // Question 2
+  words = ["nice", "red", "cat"];
+  caseStyle = "camel";
+  color = "monochromatic";
+  options = [
+    new Option(2 + '.' + 1, ["nice", "Red", "Cat"], true),
+    new Option(2 + '.' + 2, ["nice", "Led", "Cat"], false),
+    new Option(2 + '.' + 3, ["nice", "Red", "Gat"], false),
+    new Option(2 + '.' + 4, ["mice", "Red", "Cat"], false),
+  ];
+  options = shuffleArray(options);
+  questions.push(new Questions('2', words, caseStyle, color, options));
+
+  // Question 3
+  words = ["move", "south"];
+  caseStyle = "kebab";
+  color = "chromatic";
+  options = [
+    new Option(3 + '.' + 1, ["move", "south"], true),
+    new Option(3 + '.' + 2, ["moke", "south"], false),
+    new Option(3 + '.' + 3, ["move", "souls"], false),
+    new Option(3 + '.' + 4, ["mozo", "south"], false),
+  ];
+  options = shuffleArray(options);
+  questions.push(new Questions('3', words, caseStyle, color, options));
+
+  return {
+    userId: userId,
+    questions: questions
+  };
+}
+
+module.exports = { createQuestions: createQuestions,createTutorialQuestions: createTutorialQuestions };

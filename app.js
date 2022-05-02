@@ -7,6 +7,7 @@ const cors = require('cors')
 
 const indexRouter = require('./src/routes');
 const questionsRouter = require('./src/routes/questions');
+const tutorialRouter = require('./src/routes/tutorial');
 const responsesRouter = require('./src/routes/responses');
 const usersRouter = require('./src/routes/users');
 
@@ -19,6 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/questions', questionsRouter);
+app.use('/tutorial', tutorialRouter);
 app.use('/responses', responsesRouter);
 app.use('/users', usersRouter);
 
