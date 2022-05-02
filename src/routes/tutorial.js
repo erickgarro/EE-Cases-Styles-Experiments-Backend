@@ -11,7 +11,7 @@ router.get('/get/:userId', function(req, res, next) {
   const userId = req.params.userId;
   let questions;
   try {
-    questions = Questions.createQuestions(userId);
+    questions = Questions.createTutorialQuestions(userId);
     res.status(200).json(questions);
     console.log(`Tutorial questions for user ${userId} generated.`);
   } catch (err) {
