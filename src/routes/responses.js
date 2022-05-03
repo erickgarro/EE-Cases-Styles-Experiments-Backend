@@ -19,28 +19,6 @@ router.get('/:userId', function(req, res, next) {
   res.send();
 });
 
-// /*
-//  * POST to /responses/ to save a user's responses. The user's responses are in the body of the request.
-//  * The user's responses are saved as a JSON file on disk. The file name is the user's id.
-//  */
-// router.post('/', function(req, res, next) {
-//   const userId = req.body.userId;
-//   const responses = req.body;
-//   try {
-//     if (!fs.existsSync(`${process.cwd()}/data/responses`)) {
-//       fs.mkdirSync(`${process.cwd()}/data/responses`);
-//     }
-//     fs.writeFileSync(`${process.cwd()}/data/responses/${userId}.json`, JSON.stringify(responses));
-//     res.status(200).send(`Saved responses for user ${userId}`);
-//     console.log(`Saved responses for user ${userId} to disk.`);
-//     sendMail(req.body.userId, responses);
-//     console.log(`Email sent to admin.`);
-//   } catch (err) {
-//     console.error(`Error writing responses for user ${userId}: ${err}`);
-//     res.status(500).send(`Error writing responses for user ${userId}: ${err}`);
-//   }
-// });
-
 /*
  * PUT to /responses/ receives the user's responses. It takes them from the body of the request.
  * The user's responses are saved as a JSON file on disk. The file name is the user's id.
@@ -54,6 +32,10 @@ router.post('/submit/:userId', function(req, res, next) {
   const responses = req.body;
   try {
     const workingDir = process.cwd();
+    if (!fs.existsSync(workingDir + '/data')) {
+      fs.mkdirSync(workingDir + '/data');
+    }
+
     if (!fs.existsSync(`${workingDir}/data/responses`)) {
       fs.mkdirSync(`${workingDir}/data/responses`);
     }
@@ -112,7 +94,7 @@ router.post('/submit/:userId', function(req, res, next) {
   
     res.status(200).send(`Saved responses for user ${userId}`);
     console.log(`Saved responses for user ${userId} to disk.`);
-    sendMail(req.params.userId, responses, csv);
+    // sendMail(req.params.userId, responses, csv);
     console.log(`Email sent to admin.`);
   } catch (err) {
     console.error(`Error writing responses for user ${userId}: ${err}`);
@@ -120,63 +102,6 @@ router.post('/submit/:userId', function(req, res, next) {
   }
   res.send();
 });
-
-
-/*
- * Sends an email to the administrators with the user's responses attached as a JSON file.
- *
- * @param {string} userId - The user's id.
- * @param {object} responses - The user's responses.
- */
-function sendMail (userId, jsonFile, csvFile) {
-  const MAILJET_API_KEY = process.env.MAILJET_API_KEY;
-  const MAILJET_SECRET_KEY = process.env.MAILJET_SECRET_KEY;
-  const MAILJET_FROM = process.env.MAILJET_FROM;
-  const MAILJET_TO_1 = process.env.MAILJET_TO_1;
-  const MAILJET_TO_2 = process.env.MAILJET_TO_2;
-
-  const mailjet = require('node-mailjet')
-  .connect(MAILJET_API_KEY, MAILJET_SECRET_KEY)
-  const request = mailjet
-  .post("send", { 'version': 'v3.1' })
-  .request({
-    "Messages": [
-      {
-        "From": {
-          "Email": MAILJET_FROM,
-          "Name": "EE-Exp2"
-        },
-        "To": [
-          { Email: MAILJET_TO_1 },
-          { Email: MAILJET_TO_2 },
-        ],
-        "Subject": `[EE-Exp2] Response from user ${userId}`,
-        "TextPart": "The response is attached in a JSON file.",
-        "HTMLPart": "<h3>The response is attached in JSON and CSV files.</h3><br />",
-        "CustomID": "AppGettingStartedTest",
-        "Attachments": [
-          {
-            "ContentType": "application/json",
-            "Filename": `${userId}.json`,
-            "Base64Content": Buffer.from(JSON.stringify(jsonFile)).toString('base64')
-          },
-          {
-            "ContentType": "text/csv",
-            "Filename": `${userId}.csv`,
-            "Base64Content": Buffer.from(csvFile).toString('base64')
-          }
-        ]
-      }
-    ]
-  })
-  request
-  .then((result) => {
-    console.log(result.body)
-  })
-  .catch((err) => {
-    console.log(err.statusCode)
-  })
-}
 
 // This router gets all the available responses with .json extension and compresses them into a single .zip file.
 // But it does not save the zip file to disk.
@@ -240,5 +165,60 @@ router.get('/get/all/', (req, res) => {
   res.send(csvData);
 });
 
+/*
+ * Sends an email to the administrators with the user's responses attached as a JSON file.
+ *
+ * @param {string} userId - The user's id.
+ * @param {object} responses - The user's responses.
+ */
+function sendMail (userId, jsonFile, csvFile) {
+  const MAILJET_API_KEY = process.env.MAILJET_API_KEY;
+  const MAILJET_SECRET_KEY = process.env.MAILJET_SECRET_KEY;
+  const MAILJET_FROM = process.env.MAILJET_FROM;
+  const MAILJET_TO_1 = process.env.MAILJET_TO_1;
+  const MAILJET_TO_2 = process.env.MAILJET_TO_2;
+
+  const mailjet = require('node-mailjet')
+  .connect(MAILJET_API_KEY, MAILJET_SECRET_KEY)
+  const request = mailjet
+  .post("send", { 'version': 'v3.1' })
+  .request({
+    "Messages": [
+      {
+        "From": {
+          "Email": MAILJET_FROM,
+          "Name": "EE-Exp2"
+        },
+        "To": [
+          { Email: MAILJET_TO_1 },
+          { Email: MAILJET_TO_2 },
+        ],
+        "Subject": `[EE-Exp2] Response from user ${userId}`,
+        "TextPart": "The response is attached in a JSON file.",
+        "HTMLPart": "<h3>The response is attached in JSON and CSV files.</h3><br />",
+        "CustomID": "AppGettingStartedTest",
+        "Attachments": [
+          {
+            "ContentType": "application/json",
+            "Filename": `${userId}.json`,
+            "Base64Content": Buffer.from(JSON.stringify(jsonFile)).toString('base64')
+          },
+          {
+            "ContentType": "text/csv",
+            "Filename": `${userId}.csv`,
+            "Base64Content": Buffer.from(csvFile).toString('base64')
+          }
+        ]
+      }
+    ]
+  })
+  request
+  .then((result) => {
+    console.log(result.body)
+  })
+  .catch((err) => {
+    console.log(err.statusCode)
+  })
+}
 
 module.exports = router;

@@ -12,6 +12,10 @@ router.get('/get/:userId', function(req, res, next) {
   let questions;
   try {
     const workingDir = process.cwd();
+    if (!fs.existsSync(workingDir + '/data')) {
+      fs.mkdirSync(workingDir + '/data');
+    }
+
     if (!fs.existsSync(workingDir + '/data/questions')) {
       fs.mkdirSync(workingDir + '/data/questions');
     }
