@@ -94,7 +94,7 @@ router.post('/submit/:userId', function(req, res, next) {
   
     res.status(200).send(`Saved responses for user ${userId}`);
     console.log(`Saved responses for user ${userId} to disk.`);
-    // sendMail(req.params.userId, responses, csv);
+    sendMail(req.params.userId, responses, csv);
     console.log(`Email sent to admin.`);
   } catch (err) {
     console.error(`Error writing responses for user ${userId}: ${err}`);
