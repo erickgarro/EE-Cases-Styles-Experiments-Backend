@@ -1,7 +1,8 @@
 const express = require('express');
 const fs = require("fs");
+const JSZip = require("jszip");
 const router = express.Router();
-const zip = new JSZip();
+
 
 /*
  * GET Given a user id, read a JSON file on disk, and return it as a JSON object.
@@ -110,12 +111,14 @@ router.post('/submit/:userId', function(req, res, next) {
 router.get('/responses/:userId', (req, res) => {
   const workingDir = process.cwd();
   const userId = req.params.userId;
-  let responses = [];
+  const zip = new JSZip();
   const jsonFile = `${workingDir}/data/responses/${userId}.json`;
   const csvFile = `${workingDir}/data/responses/${userId}.csv`;
-
   const json = fs.readFileSync(jsonFile, 'utf8');
   const csv = fs.readFileSync(csvFile, 'utf8');
+
+  let responses = [];
+
   responses.push(JSON.parse(json));
   responses.push(csv);
   zip.file(`${userId}.json`, json);
