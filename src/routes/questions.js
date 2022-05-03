@@ -11,8 +11,11 @@ router.get('/get/:userId', function(req, res, next) {
   const userId = req.params.userId;
   let questions;
   try {
-    //working directory
     const workingDir = process.cwd();
+    if (!fs.existsSync(workingDir + '/data/questions')) {
+      fs.mkdirSync(workingDir + '/data/questions');
+    }
+
     console.log(workingDir);
     questions = JSON.parse(fs.readFileSync(`${process.cwd()}/data/questions/${userId}.json`, 'utf8'));
     res.status(200).json(questions);
