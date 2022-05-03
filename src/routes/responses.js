@@ -1,15 +1,17 @@
 const express = require('express');
 const fs = require("fs");
 const router = express.Router();
+const zip = new JSZip();
 
 /*
  * GET Given a user id, read a JSON file on disk, and return it as a JSON object.
  */
 router.get('/:userId', function(req, res, next) {
+  const workingDir = process.cwd();
   const userId = req.params.userId;
   let responses;
   try {
-    responses = fs.readFileSync(`${process.cwd()}/data/responses/${userId}.json`, 'utf8');
+    responses = fs.readFileSync(`${workingDir}/data/responses/${userId}.json`, 'utf8');
     res = JSON.parse(responses);
     console.log(`Responses for user ${userId} read from disk.`);
   } catch (err) {
@@ -29,7 +31,7 @@ router.get('/:userId', function(req, res, next) {
 
 router.post('/submit/:userId', function(req, res, next) {
   const userId = req.params.userId;
-  const responses = req.body;
+  let responses = req.body;
   try {
     const workingDir = process.cwd();
     if (!fs.existsSync(workingDir + '/data')) {
@@ -40,7 +42,7 @@ router.post('/submit/:userId', function(req, res, next) {
       fs.mkdirSync(`${workingDir}/data/responses`);
     }
 
-    fs.writeFileSync(`${process.cwd()}/data/responses/${userId}.json`, JSON.stringify(responses));
+    fs.writeFileSync(`${workingDir}/data/responses/${userId}.json`, JSON.stringify(responses));
 
     const csvHeader = 'userId,date,age,gender,background,gaveConsent,' +
                       '1_id,1_words,1_isCorrect,1_elapsedTime,' +
@@ -89,8 +91,8 @@ router.post('/submit/:userId', function(req, res, next) {
 
     const csv = `${csvHeader}${csvBody}`;
     
-    // save the csv to a file synchronously 
-    fs.writeFileSync(`${process.cwd()}/data/responses/${userId}.csv`, csv);
+    // save the csv to a file synchronously
+    fs.writeFileSync(`${workingDir}/data/responses/${userId}.csv`, csv);
   
     res.status(200).send(`Saved responses for user ${userId}`);
     console.log(`Saved responses for user ${userId} to disk.`);
@@ -106,12 +108,11 @@ router.post('/submit/:userId', function(req, res, next) {
 // This router gets all the available responses with .json extension and compresses them into a single .zip file.
 // But it does not save the zip file to disk.
 router.get('/responses/:userId', (req, res) => {
+  const workingDir = process.cwd();
   const userId = req.params.userId;
-  const responses = [];
-  const zip = new JSZip();
-
-  const jsonFile = `${process.cwd()}/data/responses/${userId}.json`;
-  const csvFile = `${process.cwd()}/data/responses/${userId}.csv`;
+  let responses = [];
+  const jsonFile = `${workingDir}/data/responses/${userId}.json`;
+  const csvFile = `${workingDir}/data/responses/${userId}.csv`;
 
   const json = fs.readFileSync(jsonFile, 'utf8');
   const csv = fs.readFileSync(csvFile, 'utf8');
@@ -128,6 +129,7 @@ router.get('/responses/:userId', (req, res) => {
 });
 
 router.get('/get/all/', (req, res) => {
+  const workingDir = `${process.cwd()}`;
   let csvData = 'userId,date,age,gender,background,gaveConsent,' +
                     '1_id,1_words,1_isCorrect,1_elapsedTime,' +
                     '2_id,2_words,2_isCorrect,2_elapsedTime,' +
@@ -150,9 +152,9 @@ router.get('/get/all/', (req, res) => {
                     '19_id,19_words,19_isCorrect,19_elapsedTime,' +
                     '20_id,20_words,20_isCorrect,20_elapsedTime\n';
 
-  fs.readdirSync(`${process.cwd()}/data/responses/`).forEach(file => {
+  fs.readdirSync(`${workingDir}/data/responses/`).forEach(file => {
     if (file.includes('.csv')) {
-      const csvFile = `${process.cwd()}/data/responses/${file}`;
+      const csvFile = `${workingDir}/data/responses/${file}`;
       const csv = fs.readFileSync(csvFile, 'utf8');
       const csvRows = csv.split('\n');
       const csvRow = csvRows[1];
