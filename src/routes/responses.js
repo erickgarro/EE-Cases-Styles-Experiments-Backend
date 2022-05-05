@@ -46,26 +46,26 @@ router.post('/submit/:userId', function(req, res, next) {
     fs.writeFileSync(`${workingDir}/data/responses/${userId}.json`, JSON.stringify(responses));
 
     const csvHeader = 'userId,date,age,gender,background,gaveConsent,' +
-                      '1_id,1_words,1_isCorrect,1_elapsedTime,' +
-                      '2_id,2_words,2_isCorrect,2_elapsedTime,' +
-                      '3_id,3_words,3_isCorrect,3_elapsedTime,' +
-                      '4_id,4_words,4_isCorrect,4_elapsedTime,' +
-                      '5_id,5_words,5_isCorrect,5_elapsedTime,' +
-                      '6_id,6_words,6_isCorrect,6_elapsedTime,' +
-                      '7_id,7_words,7_isCorrect,7_elapsedTime,' +
-                      '8_id,8_words,8_isCorrect,8_elapsedTime,' +
-                      '9_id,9_words,9_isCorrect,9_elapsedTime,' +
-                      '10_id,10_words,10_isCorrect,10_elapsedTime,' +
-                      '11_id,11_words,11_isCorrect,11_elapsedTime,' +
-                      '12_id,12_words,12_isCorrect,12_elapsedTime,' +
-                      '13_id,13_words,13_isCorrect,13_elapsedTime,' +
-                      '14_id,14_words,14_isCorrect,14_elapsedTime,' +
-                      '15_id,15_words,15_isCorrect,15_elapsedTime,' +
-                      '16_id,16_words,16_isCorrect,16_elapsedTime,' +
-                      '17_id,17_words,17_isCorrect,17_elapsedTime,' +
-                      '18_id,18_words,18_isCorrect,18_elapsedTime,' +
-                      '19_id,19_words,19_isCorrect,19_elapsedTime,' +
-                      '20_id,20_words,20_isCorrect,20_elapsedTime\n';
+                      '1_task,1_words,1_accurracy,1_duration,' +
+                      '2_task,2_words,2_accurracy,2_duration,' +
+                      '3_task,3_words,3_accurracy,3_duration,' +
+                      '4_task,4_words,4_accurracy,4_duration,' +
+                      '5_task,5_words,5_accurracy,5_duration,' +
+                      '6_task,6_words,6_accurracy,6_duration,' +
+                      '7_task,7_words,7_accurracy,7_duration,' +
+                      '8_task,8_words,8_accurracy,8_duration,' +
+                      '9_task,9_words,9_accurracy,9_duration,' +
+                      '10_task,10_words,10_accurracy,10_duration,' +
+                      '11_task,11_words,11_accurracy,11_duration,' +
+                      '12_task,12_words,12_accurracy,12_duration,' +
+                      '13_task,13_words,13_accurracy,13_duration,' +
+                      '14_task,14_words,14_accurracy,14_duration,' +
+                      '15_task,15_words,15_accurracy,15_duration,' +
+                      '16_task,16_words,16_accurracy,16_duration,' +
+                      '17_task,17_words,17_accurracy,17_duration,' +
+                      '18_task,18_words,18_accurracy,18_duration,' +
+                      '19_task,19_words,19_accurracy,19_duration,' +
+                      '20_task,20_words,20_accurracy,20_duration\n';
 
     const csvBody = userId + ',' +new Date() + ',' + 
                     responses.user.age + ',' + responses.user.gender + ',' + responses.user.background + ',' + responses.user.gaveConsent + ',' +
@@ -134,26 +134,26 @@ router.get('/responses/:userId', (req, res) => {
 router.get('/get/all/', (req, res) => {
   const workingDir = `${process.cwd()}`;
   let csvData = 'userId,date,age,gender,background,gaveConsent,' +
-                    '1_id,1_words,1_isCorrect,1_elapsedTime,' +
-                    '2_id,2_words,2_isCorrect,2_elapsedTime,' +
-                    '3_id,3_words,3_isCorrect,3_elapsedTime,' +
-                    '4_id,4_words,4_isCorrect,4_elapsedTime,' +
-                    '5_id,5_words,5_isCorrect,5_elapsedTime,' +
-                    '6_id,6_words,6_isCorrect,6_elapsedTime,' +
-                    '7_id,7_words,7_isCorrect,7_elapsedTime,' +
-                    '8_id,8_words,8_isCorrect,8_elapsedTime,' +
-                    '9_id,9_words,9_isCorrect,9_elapsedTime,' +
-                    '10_id,10_words,10_isCorrect,10_elapsedTime,' +
-                    '11_id,11_words,11_isCorrect,11_elapsedTime,' +
-                    '12_id,12_words,12_isCorrect,12_elapsedTime,' +
-                    '13_id,13_words,13_isCorrect,13_elapsedTime,' +
-                    '14_id,14_words,14_isCorrect,14_elapsedTime,' +
-                    '15_id,15_words,15_isCorrect,15_elapsedTime,' +
-                    '16_id,16_words,16_isCorrect,16_elapsedTime,' +
-                    '17_id,17_words,17_isCorrect,17_elapsedTime,' +
-                    '18_id,18_words,18_isCorrect,18_elapsedTime,' +
-                    '19_id,19_words,19_isCorrect,19_elapsedTime,' +
-                    '20_id,20_words,20_isCorrect,20_elapsedTime\n';
+                    '1_task,1_words,1_accurracy,1_duration,' +
+                    '2_task,2_words,2_accurracy,2_duration,' +
+                    '3_task,3_words,3_accurracy,3_duration,' +
+                    '4_task,4_words,4_accurracy,4_duration,' +
+                    '5_task,5_words,5_accurracy,5_duration,' +
+                    '6_task,6_words,6_accurracy,6_duration,' +
+                    '7_task,7_words,7_accurracy,7_duration,' +
+                    '8_task,8_words,8_accurracy,8_duration,' +
+                    '9_task,9_words,9_accurracy,9_duration,' +
+                    '10_task,10_words,10_accurracy,10_duration,' +
+                    '11_task,11_words,11_accurracy,11_duration,' +
+                    '12_task,12_words,12_accurracy,12_duration,' +
+                    '13_task,13_words,13_accurracy,13_duration,' +
+                    '14_task,14_words,14_accurracy,14_duration,' +
+                    '15_task,15_words,15_accurracy,15_duration,' +
+                    '16_task,16_words,16_accurracy,16_duration,' +
+                    '17_task,17_words,17_accurracy,17_duration,' +
+                    '18_task,18_words,18_accurracy,18_duration,' +
+                    '19_task,19_words,19_accurracy,19_duration,' +
+                    '20_task,20_words,20_accurracy,20_duration\n';
 
   fs.readdirSync(`${workingDir}/data/responses/`).forEach(file => {
     if (file.includes('.csv')) {
