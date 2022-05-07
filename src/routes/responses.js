@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const fs = require("fs");
 const JSZip = require("jszip");
-const zip = new JSZip();
-
 
 /*
  * GET Given a user id, read a JSON file on disk, and return it as a JSON object.
@@ -397,6 +395,7 @@ router.get('/get/reports', async (req, res) => {
     }
 
     const timestamp = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    const zip = new JSZip();
     zip.file(`general (${timestamp}).csv`, general);
     zip.file(`kebab_vs_camel (${timestamp}.csv`, kebab_vs_camel);
     zip.file(`mono_vs_color (${timestamp}).csv`, mono_vs_color);
