@@ -1,6 +1,6 @@
 # EExp2Back  
 
-#### a.k.a. EE-Cases-Styles-Experiments-Backend
+### a.k.a. EE-Cases-Styles-Experiments-Backend
 
 This software was created as part of the Experimentation and Evaluation (Spring 2022) course of the BSc in Informatics at the Università della Svizzera italiana (USI) in Lugano, Switzerland.
 
