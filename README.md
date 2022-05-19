@@ -143,6 +143,6 @@ After a participant finishes the experiment, their responses will be stored on t
 
 To consider those files the next time you request the reports via the REST endpoint, you need to add a copy of the JSON and CSV files received by email into your source code’s `/data/responses` folder. After, you have to commit and push the additions.
 
- <font size="2"> **Authors:**</font>
- <font size="2">Erick Garro Elizondo and Cindy Guerrero Toro</font>
- <font size="2">@USI, Lugano, Switzerland</font>
+ <font size="1"> **Authors:**</font>
+ <font size="1">Erick Garro Elizondo and Cindy Guerrero Toro</font>
+ <font size="1">@USI, Lugano, Switzerland</font>
