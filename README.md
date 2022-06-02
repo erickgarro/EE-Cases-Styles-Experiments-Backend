@@ -8,7 +8,8 @@ This study focuses on the following two letter case styles: **Camel case** conta
 
 We developed a web application to extend our capacity to reach potential participants and automate the collection of results. Architectonically, we divided it into backend and frontend to separate concerns and improve maintainability.
 
-If you wish to replicate the experiment, feel free to clone the repository.
+If you wish to replicate the experiment, feel free to clone the repository. A detailed explanation of the experiment's design, implementation, findings, and replicability can be found in the [report](https://github.com/erickgarro/EE-Cases-Styles-Experiments-Frontend/blob/master/report/Garro%20and%20Guerrero%20-%20camelCase%20vs%20kebab-case%20Experiment%20Report.pdf).
+
 
 Below you can find a description of the backend and the instructions to set it up to run the experiment.
 
